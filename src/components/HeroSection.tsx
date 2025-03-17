@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { Badge } from './ui/badge';
+import { useTheme } from '../context/ThemeContext';
 
 interface HeroSectionProps {
   article: Article;
@@ -13,6 +14,7 @@ interface HeroSectionProps {
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ article }) => {
   const formattedDate = formatDistanceToNow(new Date(article.timestamp), { addSuffix: true });
+  const { theme } = useTheme();
 
   return (
     <div className="relative overflow-hidden rounded-xl mb-12">
@@ -22,26 +24,37 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ article }) => {
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${article.imageUrl || 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158'})` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/70 to-background/30 dark:from-background/95 dark:via-background/80 dark:to-background/40" />
+        {/* Adjusted gradient for better text readability in both light and dark modes */}
+        <div 
+          className={`absolute inset-0 ${
+            theme === 'light' 
+              ? 'bg-gradient-to-t from-background/95 via-background/80 to-background/60' 
+              : 'bg-gradient-to-t from-background/95 via-background/70 to-background/30'
+          }`} 
+        />
       </div>
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 py-16 md:py-24 flex flex-col items-start">
         <div className="max-w-3xl">
           <div className="flex items-center gap-3 mb-4">
-            <Badge variant="outline" className="bg-background/50 dark:bg-background/30 backdrop-blur-sm">
+            <Badge variant="outline" className={`${theme === 'light' ? 'bg-background/80' : 'bg-background/50'} backdrop-blur-sm`}>
               {article.category}
             </Badge>
-            <span className="text-sm text-muted-foreground">
+            <span className={`text-sm ${theme === 'light' ? 'text-gray-800' : 'text-muted-foreground'}`}>
               {formattedDate} • {article.source}
             </span>
           </div>
           
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-foreground">
+          <h1 className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-6 ${
+            theme === 'light' ? 'text-gray-900 drop-shadow-sm' : 'text-foreground'
+          }`}>
             {article.title}
           </h1>
           
-          <p className="text-lg text-muted-foreground mb-8 line-clamp-3 md:line-clamp-4">
+          <p className={`text-lg mb-8 line-clamp-3 md:line-clamp-4 ${
+            theme === 'light' ? 'text-gray-800' : 'text-muted-foreground'
+          }`}>
             {article.summary}
           </p>
           
