@@ -1,3 +1,4 @@
+
 import { Article, Category } from '../types';
 
 export const articles: Article[] = [
@@ -181,5 +182,7 @@ export const getAllCategories = (): Category[] => {
   return ['All', 'AI', 'Cybersecurity', 'Hardware', 'Software', 'Startups', 'Web3', 'Mobile'];
 };
 
-export
-
+export const getFeaturedArticle = (): Article | null => {
+  const featured = articles.find(article => article.featured);
+  return featured || null;
+};
