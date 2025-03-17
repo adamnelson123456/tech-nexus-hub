@@ -4,11 +4,13 @@ import { useLocation } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
 import { CategoryFilter } from '../components/CategoryFilter';
 import { ArticleList } from '../components/ArticleList';
-import { getArticlesByCategory, getRecentArticles } from '../data/articles';
+import { HeroSection } from '../components/HeroSection';
+import { getArticlesByCategory, getRecentArticles, getFeaturedArticle } from '../data/articles';
 import { Article, Category } from '../types';
 
 const Index = () => {
   const [articles, setArticles] = useState<Article[]>([]);
+  const [featuredArticle, setFeaturedArticle] = useState<Article | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
 
@@ -16,6 +18,9 @@ const Index = () => {
     setIsLoading(true);
     const searchParams = new URLSearchParams(location.search);
     const category = searchParams.get('category') as Category | null;
+
+    // Get the featured article
+    setFeaturedArticle(getFeaturedArticle());
 
     // Simulate API call with a small delay
     const timer = setTimeout(() => {
@@ -34,6 +39,8 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       <main className="container mx-auto px-4 py-8">
+        {featuredArticle && <HeroSection article={featuredArticle} />}
+        
         <header className="mb-10">
           <h1 className="text-4xl font-bold mb-4">Latest Tech News</h1>
           <p className="text-muted-foreground max-w-3xl">
@@ -43,7 +50,7 @@ const Index = () => {
         
         <CategoryFilter />
         
-        <ArticleList articles={articles} isLoading={isLoading} />
+        <ArticleList articles={articles.filter(article => article.id !== featuredArticle?.id)} isLoading={isLoading} />
       </main>
       
       <footer className="bg-muted py-6 mt-12">

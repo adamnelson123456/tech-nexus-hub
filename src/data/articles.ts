@@ -1,4 +1,3 @@
-
 import { Article, Category } from '../types';
 
 export const articles: Article[] = [
@@ -13,6 +12,7 @@ export const articles: Article[] = [
     category: 'AI',
     timestamp: '2023-10-15T14:30:00Z',
     url: '/article/1',
+    featured: true,
   },
   {
     id: '2',
@@ -180,3 +180,6 @@ export const getArticleById = (id: string) => {
 export const getAllCategories = (): Category[] => {
   return ['All', 'AI', 'Cybersecurity', 'Hardware', 'Software', 'Startups', 'Web3', 'Mobile'];
 };
+
+export
+

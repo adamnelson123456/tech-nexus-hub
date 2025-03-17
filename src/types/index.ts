@@ -12,6 +12,7 @@ export interface Article {
   category: Category;
   timestamp: string;
   url: string;
+  featured?: boolean;
 }
 
 export type SortOption = 'newest' | 'trending' | 'most-viewed';
