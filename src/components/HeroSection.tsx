@@ -25,25 +25,28 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ article }) => {
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${article.imageUrl || 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158'})` }}
         />
-        {/* Enhanced gradient with blur effect for better text readability */}
+        {/* Semi-transparent overlay with enhanced blur effect */}
+        <div className="absolute inset-0 backdrop-blur-md bg-black/40" />
+        
+        {/* Additional gradient overlay for better contrast */}
         <div 
           className={cn(
-            "absolute inset-0 backdrop-blur-sm",
+            "absolute inset-0",
             theme === 'light' 
-              ? 'bg-gradient-to-t from-background/95 via-background/90 to-background/75' 
-              : 'bg-gradient-to-t from-background/95 via-background/80 to-background/40'
+              ? 'bg-gradient-to-t from-background/95 via-background/70 to-background/30' 
+              : 'bg-gradient-to-t from-background/95 via-background/60 to-background/20'
           )} 
         />
       </div>
 
-      {/* Content with enhanced contrast for light mode */}
+      {/* Content with text shadows for better readability */}
       <div className="relative z-10 container mx-auto px-4 py-16 md:py-24 flex flex-col items-start">
         <div className="max-w-3xl">
           <div className="flex items-center gap-3 mb-4">
             <Badge variant="outline" className={cn(
               "backdrop-blur-sm", 
               theme === 'light' 
-                ? 'bg-background/90 text-gray-900' 
+                ? 'bg-background/90 text-gray-900 shadow-sm' 
                 : 'bg-background/70'
             )}>
               {article.category}
@@ -51,34 +54,34 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ article }) => {
             <span className={cn(
               "text-sm font-medium", 
               theme === 'light' 
-                ? 'text-gray-900' 
+                ? 'text-gray-900 drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]' 
                 : 'text-muted-foreground'
             )}>
               {formattedDate} • {article.source}
             </span>
           </div>
           
-          {/* Title with enhanced readability */}
+          {/* Title with text shadow for enhanced readability */}
           <h1 className={cn(
             "text-3xl md:text-4xl lg:text-5xl font-bold mb-6",
             theme === 'light' 
-              ? 'text-gray-900 drop-shadow-sm' 
-              : 'text-foreground'
+              ? 'text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]' 
+              : 'text-foreground drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]'
           )}>
             {article.title}
           </h1>
           
-          {/* Summary with enhanced contrast */}
+          {/* Summary with text shadow for enhanced contrast */}
           <p className={cn(
             "text-lg mb-8 line-clamp-3 md:line-clamp-4",
             theme === 'light' 
-              ? 'text-gray-900' 
+              ? 'text-white drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)]' 
               : 'text-muted-foreground'
           )}>
             {article.summary}
           </p>
           
-          {/* Buttons */}
+          {/* Buttons with enhanced contrast background */}
           <div className="flex flex-wrap gap-4">
             <Button asChild size="lg" className="group">
               <Link to={article.url}>
@@ -86,7 +89,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ article }) => {
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
-            <Button variant="outline" asChild size="lg" className={theme === 'light' ? 'bg-background/90' : ''}>
+            <Button variant="outline" asChild size="lg" className={theme === 'light' ? 'bg-background/90 text-foreground border-white/20' : ''}>
               <a href={article.sourceUrl} target="_blank" rel="noopener noreferrer">
                 Original Source
               </a>
